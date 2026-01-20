@@ -151,7 +151,7 @@ export const ReportDashboard: React.FC<ReportDashboardProps> = ({ logs, goals, c
     <div className="space-y-8 animate-in fade-in duration-700 pb-12">
       <header>
         <h2 className="text-3xl font-black text-slate-900 dark:text-slate-100 mb-1 tracking-tight transition-colors">Discipline Audit</h2>
-        <p className="text-slate-500 dark:text-slate-400 font-medium">Monthly performance and AI strategic advice</p>
+        <p className="text-slate-500 dark:text-slate-400 font-medium">Monthly performance and report</p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -176,22 +176,6 @@ export const ReportDashboard: React.FC<ReportDashboardProps> = ({ logs, goals, c
                 <span className="text-3xl font-black">{stats.totalGlobal}</span>
              </div>
           </div>
-        </div>
-
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-sm transition-all">
-          <h3 className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">AI Strategy Tips</h3>
-          <ul className="space-y-4">
-             {loadingAI ? (
-               [1,2,3].map(i => <div key={i} className="h-10 bg-slate-50 dark:bg-slate-800 rounded-xl animate-pulse" />)
-             ) : (
-               insights?.recommendations.map((rec, i) => (
-                 <li key={i} className="flex gap-4 group">
-                    <span className="w-6 h-6 rounded-lg bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-black shrink-0">{i+1}</span>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{rec}</p>
-                 </li>
-               ))
-             )}
-          </ul>
         </div>
 
         {/* Goals & Challenges Analysis Row */}
