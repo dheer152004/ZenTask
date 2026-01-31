@@ -71,6 +71,7 @@ export const Profile: React.FC<ProfileProps> = ({
   const [editedMantra, setEditedMantra] = useState(profile.productivityMantra);
   const [editedAvatar, setEditedAvatar] = useState(profile.avatarUrl);
   const [editedUsername, setEditedUsername] = useState(profile.username || '');
+  const [editedEmail, setEditedEmail] = useState(profile.email || '');
   const [usernameError, setUsernameError] = useState('');
 
   // Custom Avatar Generator State
@@ -95,6 +96,7 @@ export const Profile: React.FC<ProfileProps> = ({
     setEditedMantra(profile.productivityMantra);
     setEditedAvatar(profile.avatarUrl);
     setEditedUsername(profile.username || '');
+    setEditedEmail(profile.email || '');
     setUsernameError('');
     setCustomSeed(profile.name); // Default seed to current name
     setIsEditing(true);
@@ -113,6 +115,13 @@ export const Profile: React.FC<ProfileProps> = ({
 
     if (editedUsername && !/^[a-zA-Z0-9_-]+$/.test(editedUsername)) {
       setUsernameError('Username can only contain letters, numbers, underscore, and dash');
+      return;
+    }
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (editedEmail && !emailRegex.test(editedEmail)) {
+      setNotification({ message: 'Please enter a valid email address', type: 'error' });
       return;
     }
 
@@ -140,7 +149,8 @@ export const Profile: React.FC<ProfileProps> = ({
       bio: editedBio,
       productivityMantra: editedMantra,
       avatarUrl: editedAvatar,
-      username: editedUsername.toLowerCase().trim()
+      username: editedUsername.toLowerCase().trim(),
+      email: editedEmail.trim()
     };
 
     // Always update locally first
@@ -156,6 +166,7 @@ export const Profile: React.FC<ProfileProps> = ({
           displayName: editedName,
           avatarUrl: editedAvatar,
           slogan: editedMantra,
+          email: editedEmail.trim(),
           updatedAt: new Date().toISOString()
         });
       } catch (err: any) {
@@ -352,6 +363,7 @@ export const Profile: React.FC<ProfileProps> = ({
                     />
                     {usernameError && <p className="text-red-500 text-xs mt-1 font-bold">{usernameError}</p>}
                   </div>
+                  <input type="email" value={editedEmail} onChange={e => setEditedEmail(e.target.value)} placeholder="Email address..." className="w-full text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 focus:outline-none focus:border-indigo-600 px-2 py-1 transition-colors" />
                 </div>
 
                 <div className="space-y-3">
@@ -404,6 +416,7 @@ export const Profile: React.FC<ProfileProps> = ({
               <div>
                 <h3 className="text-4xl font-black text-slate-800 dark:text-slate-100 mb-2 transition-colors">{profile.name}</h3>
                 {profile.username && <p className="text-slate-400 dark:text-slate-500 text-sm mb-2 font-mono">@{profile.username}</p>}
+                {profile.email && <p className="text-slate-400 dark:text-slate-500 text-sm mb-2 font-mono">{profile.email}</p>}
                 <p className="text-slate-500 dark:text-slate-400 text-lg mb-6 transition-colors">{profile.bio}</p>
                 <div className="inline-flex items-center gap-3 px-6 py-3 bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 rounded-2xl text-indigo-700 dark:text-indigo-300 transition-colors">
                   <span className="text-sm font-black uppercase tracking-widest italic">"{profile.productivityMantra}"</span>

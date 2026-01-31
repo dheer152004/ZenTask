@@ -67,6 +67,7 @@ export interface UserProfile {
   theme: string; // 'indigo', 'pink', 'rose', 'amber', 'emerald', 'sky', 'zinc'
   allowCompletedDeletion: boolean;
   username?: string; // Optional username for login
+  email?: string; // Optional email address
 }
 
 export interface MonthlyStats {
